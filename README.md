@@ -4,12 +4,6 @@
 > documentation set for a new software project **before any code is
 > written** — then plans the implementation and generates the
 > project's CLAUDE.md.
->
-> **Note:** this suite is project-agnostic and destined for its own
-> repository (personal project, working name **Groundwork**). It
-> currently lives inside *Platform — Team Monitoring* only because it
-> was extracted from that project's documentation programme. Nothing
-> in these skills depends on this repository.
 
 ------------------------------------------------------------------------
 
@@ -36,10 +30,6 @@ docs/
 └── planning/             priority-ordered dev phases with checkbox
                           deliverables and verifiable exit criteria
 ```
-
-…plus the four state files (README, PROJECT_STATE, ROADMAP, CHANGELOG)
-and, at the end, a CLAUDE.md so any future session can implement the
-project without re-deriving anything.
 
 ## The method (what makes it different)
 
