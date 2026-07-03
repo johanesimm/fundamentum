@@ -1,4 +1,4 @@
-# Groundwork — Documentation-First Project Initialization Skills
+# Fundamentum — Documentation-First Project Initialization Skills
 
 > A Claude Code skill suite that builds a complete, fully-decided
 > documentation set for a new software project **before any code is
