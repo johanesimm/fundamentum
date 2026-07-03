@@ -81,20 +81,3 @@ Then, in Claude Code:
 "Initialize this project documentation-first"   → docs-init-project
 "Generate a CLAUDE.md for this project"         → generate-claude-md
 ```
-
-## Recommended repository name
-
-**`groundwork`** — lay the groundwork before you build. Alternatives
-considered: `spec-forge`, `blueprint-first`, `inception-docs`,
-`docs-first-kit`. Suggested description: *"Interview-driven,
-documentation-first project initialization skills for Claude Code —
-from idea to fully-decided specs to phased implementation plan."*
-
-## Provenance
-
-Extracted from the **Platform — Team Monitoring** documentation
-programme (2026), where this exact pipeline produced: 9 foundation
-docs, 12 architecture docs, a 59-requirement Master PRD, 6 Feature
-PRDs with 90 requirements and zero open questions, 6 engineering specs
-with a PostgreSQL-validated 34-table schema, and an 8-phase
-development plan.
