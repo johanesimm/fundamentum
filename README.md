@@ -31,6 +31,9 @@ docs/
                           deliverables and verifiable exit criteria
 ```
 
+…plus the four state files (README, PROJECT_STATE, ROADMAP, CHANGELOG) and, at the end, a CLAUDE.md 
+so any future session can implement the project without re-deriving anything.
+
 ## The method (what makes it different)
 
 1. **Grill first** — every phase starts by interviewing the user;
