@@ -2,8 +2,7 @@
 
 > A Claude Code skill suite that builds a complete, fully-decided
 > documentation set for a new software project **before any code is
-> written** — then plans the implementation and generates the
-> project's CLAUDE.md.
+> written** — then plans the implementation.
 
 ------------------------------------------------------------------------
 
