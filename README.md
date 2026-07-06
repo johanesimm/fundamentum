@@ -7,6 +7,20 @@
 
 ------------------------------------------------------------------------
 
+## Quick start
+
+```bash
+npx @johanesimm/fundamentum
+```
+
+That's it — the installer asks whether to install **globally** (every
+project) or into the **current project**, copies the skills into the
+right `.claude/skills/` folder, and you're done. Restart Claude Code,
+then say *"Initialize this project documentation-first"* to kick off
+`blueprint`. Full walkthrough in [Installation](#installation) below.
+
+------------------------------------------------------------------------
+
 ## What it does
 
 You start with an idea. The skills interview you — they never invent
@@ -93,46 +107,79 @@ jump straight to one phase, provided its inputs already exist.
 
 ## Installation
 
-### One command (recommended)
+### The `npx` installer (recommended)
 
-Run the installer with `npx` — it asks whether to install **globally**
-(every project) or into the **current project**, then copies the skills
-into the right `.claude/skills/` directory:
+**Prerequisites:** [Node.js](https://nodejs.org) 18+ (gives you `npx`)
+and [Claude Code](https://claude.com/claude-code).
 
-```
-npx fundamentum            # install all skills, prompts global vs project
-npx fundamentum add primer # install just one skill
-npx fundamentum --global   # skip the prompt: install for every project
-npx fundamentum --project  # skip the prompt: install into ./.claude/skills
-npx fundamentum list       # show bundled skills
+**Step 1 — run the installer.** No global install needed; `npx` fetches
+and runs it on the fly:
+
+```bash
+npx @johanesimm/fundamentum
 ```
 
-Not yet on npm? Run it straight from the repo:
+**Step 2 — choose where the skills go.** You'll be asked:
 
 ```
-npx github:<owner>/fundamentum        # from GitHub
-node bin/cli.mjs --project            # from a local checkout
+Fundamentum — installing: blueprint, excavate, primer
+
+Where should these skills go?
+  1) Global   ~/.claude/skills      (available in every project)
+  2) Project  ./.claude/skills      (this repo only)
+Choose [1/2]:
 ```
 
-Restart Claude Code (or start a new session) after installing so it
-picks the skills up.
+- **Global** → the skills work in *every* project on your machine.
+- **Project** → installed only into the repo you're currently in
+  (`./.claude/skills/`); commit them to share with your team.
 
-### Manual (no Node)
+**Step 3 — done.** It copies the folders and confirms:
+
+```
+  ✓ blueprint → ~/.claude/skills/blueprint
+  ✓ excavate  → ~/.claude/skills/excavate
+  ✓ primer    → ~/.claude/skills/primer
+
+Done. Installed 3 skill(s) into the global directory.
+Restart Claude Code (or start a new session) to pick them up.
+```
+
+**Step 4 — use them.** Restart Claude Code, then just ask:
+
+| Say this | Runs |
+|---|---|
+| "Initialize this new project documentation-first" | `blueprint` |
+| "Document this existing codebase" | `excavate` |
+| "Generate the agent-context file for this project" | `primer` |
+
+### More installer options
+
+```bash
+npx @johanesimm/fundamentum add primer   # install just one skill (space-separate for several)
+npx @johanesimm/fundamentum --global     # skip the prompt: install for every project
+npx @johanesimm/fundamentum --project    # skip the prompt: install into ./.claude/skills
+npx @johanesimm/fundamentum --force      # overwrite existing skills without asking
+npx @johanesimm/fundamentum list         # show which skills are bundled
+npx @johanesimm/fundamentum --help       # full usage
+```
+
+### Run without npm (from source)
+
+```bash
+npx github:<owner>/fundamentum           # straight from GitHub, no publish needed
+node bin/cli.mjs --project               # from a local checkout of this repo
+```
+
+### Manual copy (no Node at all)
 
 Copy the skill folders (`blueprint/`, `excavate/`, `primer/`) into
 `~/.claude/skills/` (global) or `<repo>/.claude/skills/` (project).
 
-### Publishing your own copy
+### Fork & publish your own
 
-The package is a plain npm package: set a unique `name` in
-`package.json` (e.g. a scoped `@you/fundamentum`), then `npm publish`.
-Whatever you name it becomes the `npx <name>` command. `files` in
-`package.json` already ships only the CLI + skill folders + README.
-
-Then, in Claude Code:
-
-```
-"Initialize this new project documentation-first"  → blueprint
-"Document this existing codebase"                   → excavate
-"Generate the agent-context file for this project"  → primer
-```
+It's a plain npm package. Set a unique `name` in `package.json` (a
+scoped `@you/fundamentum` is always free), then `npm publish` (scoped
+packages need `--access public`, already set here via `publishConfig`).
+Whatever you name it becomes the `npx <name>` command; `files` in
+`package.json` ships only the CLI + skill folders + README.
