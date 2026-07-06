@@ -62,16 +62,18 @@ greenfield build). Each phase file:
     scenarios — including regression checks that existing behavior still
     passes
 
-## Wire it into CLAUDE.md
+## Wire it into the primer file
 
-Add/replace the project CLAUDE.md **Implementation Guide** section:
-trigger condition; "the docs describe the system as-built plus the
-planned gap — do not invent behavior; if a spec doesn't answer, stop and
-update the spec first"; the phase list with the rule that a phase starts
-only when the previous exit criteria pass; a "which doc answers what"
-map; the non-negotiables (don't regress shipped behavior, server-side
-guards, matches the documented schema/API, the do-not-build list).
-Generate the CLAUDE.md itself with the `generate-claude-md` skill.
+Add/replace the **Implementation Guide** section of the project's
+agent-context (primer) file — `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, or
+whichever the `primer` skill resolves for the user's tool: trigger
+condition; "the docs describe the system as-built plus the planned gap —
+do not invent behavior; if a spec doesn't answer, stop and update the
+spec first"; the phase list with the rule that a phase starts only when
+the previous exit criteria pass; a "which doc answers what" map; the
+non-negotiables (don't regress shipped behavior, server-side guards,
+matches the documented schema/API, the do-not-build list). Generate the
+primer file itself with the `primer` skill (it asks which tool/file).
 
 ## Validation & bookkeeping
 
@@ -85,5 +87,5 @@ ROADMAP (documentation ✅, remaining work 🚧 Next).
 
 Overview + any phase files exist with clean ID cross-checks, the plan
 covers exactly the gap (nothing already-built is re-planned, nothing
-⏳ Planned is dropped), CLAUDE.md guides a fresh session, and the state
+⏳ Planned is dropped), the primer file guides a fresh session, and the state
 files agree. Documentation of the existing project is complete.

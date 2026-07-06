@@ -31,7 +31,8 @@ docs/
                           deliverables and verifiable exit criteria
 ```
 
-…plus the four state files (README, PROJECT_STATE, ROADMAP, CHANGELOG) and, at the end, a CLAUDE.md 
+…plus the four state files (README, PROJECT_STATE, ROADMAP, CHANGELOG) and, at the end, an
+agent-context file (`CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, … — whichever your coding tool reads)
 so any future session can implement the project without re-deriving anything.
 
 ## The method (what makes it different)
@@ -41,22 +42,29 @@ so any future session can implement the project without re-deriving anything.
 2. **Fully-decided rule** — Feature PRDs and engineering specs ship
    with no "Open Questions"/"TBD"; the Master PRD's deferred registry
    is the single sanctioned backlog for future questions.
-3. **Validate, don't just write** — schemas run against a throwaway
-   database container; requirement references are machine-checked
-   across every document.
+3. **Validate, don't just write** — any schema runs against a throwaway
+   database instance; requirement references are machine-checked across
+   every document.
 4. **Bookkeeping discipline** — PROJECT_STATE/CHANGELOG/ROADMAP are
    updated after every major document, so any session can resume.
+5. **Stack-agnostic** — the method fits any project type (web app,
+   service, CLI, library, mobile, data pipeline). The suite's
+   containerized-web-app conventions (Docker, Node/Express + Postgres,
+   React) are offered as a **recommended default profile** each skill
+   lets you confirm, adapt, or replace — never a hard requirement.
+   Stack-specific docs (frontend spec, DDL, deployment) are produced
+   only when they apply.
 
 ## Skill inventory
 
 Three skills — two orchestrators (new vs existing project) plus the
-standalone CLAUDE.md generator:
+standalone agent-context (primer) generator:
 
 | Skill | Role | Invoke when |
 |---|---|---|
 | `blueprint` | **Greenfield orchestrator** — scaffolds `docs/` and drives all five phases (foundation → architecture → prd → engineering → planning), deciding everything by interview | Starting a brand-new project documentation-first, or asking for any single phase |
 | `excavate` | **Brownfield orchestrator** — surveys the real code + DB, then drives a reduced pipeline (foundation → prd → data/API → planning) that documents what's already built and plans the gap | Documenting / reverse-engineering an existing codebase |
-| `generate-claude-md` | Standalone: generate a house-style CLAUDE.md for any project (interview-driven) | Anytime; also each pipeline's final step |
+| `primer` | Standalone: generate the house-style agent-context file for any project — asks which agentic tool the user uses and writes the right file (`CLAUDE.md` / `AGENTS.md` / `GEMINI.md` / …) | Anytime; also each pipeline's final step |
 
 The phases are **not** separate skills — each orchestrator bundles them
 as instruction files under its own `phases/`, read one at a time:
@@ -94,5 +102,5 @@ Then, in Claude Code:
 ```
 "Initialize this new project documentation-first"  → blueprint
 "Document this existing codebase"                   → excavate
-"Generate a CLAUDE.md for this project"             → generate-claude-md
+"Generate the agent-context file for this project"  → primer
 ```

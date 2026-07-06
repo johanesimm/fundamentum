@@ -12,6 +12,33 @@ Interview the user only for genuine engineering-level choices (e.g.
 email transport mechanism, deployment target) — present options with a
 recommendation.
 
+**Adapt the doc set to the project type (this catalogue is the
+web-app-with-relational-DB default).** Produce only the specs that
+apply, and translate each to the project's real stack:
+
+-   **20-ERD / 21-Database-Schema** — only if the project has a managed
+    datastore. Relational → ERD + DDL as below; a document/KV store →
+    document the collections, keys, and invariants in the store's own
+    terms; no persistent store (CLI, stateless service, library) → skip
+    both.
+-   **22-REST-API** — retitle to the actual interface: **22-API** for
+    gRPC/GraphQL, **22-CLI-Interface** for a command-line tool,
+    **22-Public-API** for a library's exported surface. Keep the intent
+    (every operation, its inputs, its errors, its requirement refs).
+-   **23-Frontend-Specification** — only if it has a UI; otherwise skip.
+-   **24-Backend-Specification** — retitle to **24-Core-Specification**
+    for a non-HTTP service, CLI, or library; keep the module/layering,
+    guard-placement, and verification content, drop web-only pieces
+    (request pipeline, outbox) that don't apply.
+-   **25-Deployment-Guide** — match the real delivery model: container
+    topology (below), a serverless deploy, a published package
+    (registry + versioning + release process), or an app-store build.
+
+Renumber nothing — keep 20–25 for the slots that exist, and note any
+skipped doc in 20 (or the umbrella) so the omission is explicit. The
+per-doc detail below is the default profile; carry its *intent* into
+whatever stack the project chose.
+
 Every requirement ID cited in these specs must exist in the PRDs —
 run the cross-check grep after each document:
 
@@ -42,11 +69,14 @@ invariant, partial indexes for hot paths, immutability triggers
 rows), worker-infrastructure tables (outbox, job ledger, email queue)
 if 24 needs them.
 
-**MANDATORY: validate the DDL against a real database** (throwaway
-Docker container of the chosen engine): extract the SQL blocks, run
-with ON_ERROR_STOP, count tables, smoke-test 2–3 key guards
-(immutability trigger, a CHECK constraint), tear down. A schema doc
-that hasn't run is not done. Re-validate after every later amendment.
+**MANDATORY when there is a schema: validate it against a real
+instance** of the chosen engine (a throwaway Docker container or
+equivalent): for SQL, extract the DDL, run with `ON_ERROR_STOP`, count
+tables, smoke-test 2–3 key guards (an immutability trigger, a CHECK
+constraint), tear down; for a non-SQL store, apply the schema/validators
+to a throwaway instance and assert a couple of the invariants. A schema
+doc that hasn't been executed against a real engine is not done.
+Re-validate after every later amendment.
 
 ## 22-REST-API
 
@@ -110,6 +140,7 @@ bypasses).
 
 After each doc: cross-check grep, PROJECT_STATE, CHANGELOG (record
 engineering decisions like transport choices individually), ROADMAP/
-README markers. Done when 20–25 exist, the schema has passed live
-validation, all reference greps are clean, and PROJECT_STATE points at
-planning (`phases/planning.md`).
+README markers. Done when every applicable spec in the 20–25 range
+exists (skipped ones noted), any schema has passed live validation
+against a real engine, all reference greps are clean, and PROJECT_STATE
+points at planning (`phases/planning.md`).

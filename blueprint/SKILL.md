@@ -89,6 +89,8 @@ them too when reviewing output)
 
 ## Exit
 
-When all five phases are complete, generate the project's CLAUDE.md
-with the `generate-claude-md` skill (it will reuse everything above as
-interview input), then hand over to implementation.
+When all five phases are complete, generate the project's agent-context
+(primer) file with the `primer` skill — it asks which agentic coding
+tool the user uses and writes the correctly-named file (`CLAUDE.md`,
+`AGENTS.md`, `GEMINI.md`, …) or skips if they use none, reusing
+everything above as interview input. Then hand over to implementation.

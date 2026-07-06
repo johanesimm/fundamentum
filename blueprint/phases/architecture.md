@@ -9,20 +9,26 @@ Translate the foundation (00–08) into locked technical decisions.
 **Read the foundation docs first** — architecture serves the domain
 model and journeys, not the other way around. Every choice is either
 proposed-with-rationale and confirmed by the user, or given by the
-user directly.
+user directly. The recommendations below are a common default for a
+**web application**; first establish what KIND of system this is (web
+app, service/API, CLI, library, mobile, data pipeline, …) and only
+offer the recommendations that fit — never assume a web stack.
 
 ## Interview (before writing)
 
-Round 1 — shape: monolith vs modular monolith vs services (recommend
-modular monolith for a new product); API style (recommend REST,
-versioned prefix `/api/v1`); event needs (recommend event-ready
-outbox, not a broker, for MVP); background work (recommend a worker
-process). Round 2 — stack: frontend (recommend React + Vite +
-Tailwind + shadcn/ui + TanStack Query + Zustand + RHF + Zod,
-feature-based), backend (recommend Node/Express + PostgreSQL +
-JWT/refresh + Argon2id + RBAC), anything the user's org mandates.
-Round 3 — boundaries: which modules own which data; AI isolation
-requirements; permission philosophy.
+Round 1 — shape: overall structure (for a web/service product recommend
+a modular monolith; but a CLI, library, or pipeline has its own shape —
+match the project type); interface style (REST with a versioned prefix
+is a good web default; others use gRPC, GraphQL, a CLI surface, a public
+library API, message consumers — pick what fits); event needs; async/
+background work if any. Round 2 — stack, offered per tier only when it
+applies and always replaceable: *frontend* (default React + Vite +
+Tailwind + shadcn/ui + TanStack Query + Zustand + RHF + Zod — only if it
+has a UI); *backend/core* (default Node/Express + PostgreSQL + JWT/
+refresh + Argon2id + RBAC — or whatever language/runtime/datastore the
+project actually uses: Python, Go, Rust, Java, …); anything the user's
+org mandates. Round 3 — boundaries: which modules own which data; AI
+isolation requirements; permission/trust philosophy.
 
 ## Documents to produce
 
@@ -41,6 +47,15 @@ requirements; permission philosophy.
 | **09.I-State-Management** | Frontend state rules (e.g. "server state in query cache only, never in the client store" — make one locked rule like this) |
 | **09.J-Technology-Stack-Decision** | Final stack table, one line of rationale each |
 
+Produce only the docs that fit the project type — several are
+web-specific. A headless service or CLI omits **09.A** (frontend) and
+**09.I** (frontend state); a single-process tool may fold **09.D** into
+09.B; a project with no eventing skips **09.E**; a library exposing a
+public API documents its surface in **09.G** rather than an HTTP prefix.
+Keep the umbrella (09), ADRs (09.5), module boundaries (09.C), data
+ownership (09.F), and the stack decision (09.J) in every case; note any
+intentionally-omitted doc in 09 so the omission is explicit.
+
 Short docs are fine — several of these are half a page. Precision
 beats length.
 
@@ -56,6 +71,8 @@ beats length.
 
 ## Done when
 
-09 + 09.5 + 09.A–J exist; module list (09.C) and data ownership
-(09.F) are mutually consistent; ADRs cover every stack row in 09.J;
-PROJECT_STATE points at the Master PRD (`phases/prd.md`).
+09 + 09.5 + 09.C + 09.F + 09.J exist plus every other boundary doc that
+applies to this project type (any omitted one is noted in 09); module
+list (09.C) and data ownership (09.F) are mutually consistent; ADRs
+cover every stack row in 09.J; PROJECT_STATE points at the Master PRD
+(`phases/prd.md`).
