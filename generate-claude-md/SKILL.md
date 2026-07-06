@@ -1,6 +1,6 @@
 ---
 name: generate-claude-md
-description: Generate a CLAUDE.md for a NEW project following our house conventions (section skeleton, Tech Rules, root-compose folder structure, TDD-first backend, shared-components-first frontend). Use when the user asks to generate/create/bootstrap a CLAUDE.md or "AI context file" for a project. MUST interview the user about the project before writing anything — never generate from assumptions.
+description: Generate a CLAUDE.md for a NEW project following our house conventions (section skeleton, Tech Rules, root-compose folder structure, Docker-only tooling, Clean-Architecture/domain-oriented backend, TDD-first backend, shared-components-first frontend, no-hard-coded-secrets with .env.example, infra in its own compose). Use when the user asks to generate/create/bootstrap a CLAUDE.md or "AI context file" for a project. MUST interview the user about the project before writing anything — never generate from assumptions.
 ---
 
 # Generate CLAUDE.md (house style)
@@ -94,10 +94,13 @@ and say so in a comment; `---` separators between sections):
 
 ## Tech Rules (mandatory content — adapt names, never weaken)
 
-Embed all five groups, renumbered cleanly:
+Embed all six groups, renumbered cleanly:
 
 -   **Containerization**: everything runs in Docker (no host
-    runtimes); infrastructure in its own root `docker-infra.yml`
+    runtimes) — build, test, lint, migrations, and app processes all
+    execute **inside containers** (e.g. `docker compose … run/exec`),
+    **never as raw host commands** (`npm run build`, `tsc`, `vite`,
+    …); infrastructure in its own root `docker-infra.yml`
     (databases, mail catcher, queues — stock images); TWO container
     levels per service, both always present — `Dockerfile.dev`
     (source bind-mounts + hot reload: watcher for backend, HMR dev
@@ -113,11 +116,21 @@ Embed all five groups, renumbered cleanly:
     comments; env is for secrets/deployment concerns only — runtime
     org settings belong in the database behind an admin UI; secrets
     never in logs, errors, or API responses.
+-   **Backend architecture**: **Clean Architecture / domain-oriented is
+    the standard** — dependencies point **inward**: adapters
+    (controllers, repositories) → services / use-cases → domain; the
+    domain imports nothing outward. Business logic (mappers,
+    derivations, projections, domain/business rules) lives in the
+    domain/service layer and is **independent of the web framework and
+    the DB driver/ORM**; controllers and repositories are thin
+    adapters. Boundaries are lint-enforced (adapters never bypass
+    services; domain/services never import the framework or DB driver;
+    only repositories issue SQL; cross-module access only via exported
+    interfaces).
 -   **Code quality**: TypeScript strict both sides; shared validation
-    schemas (Zod) between API and forms; layering linted (controllers
-    → services → repositories; cross-module access only via exported
-    module interfaces; frontend features never import each other's
-    internals); **backend TDD is mandatory** — failing test first,
+    schemas (Zod) between API and forms; frontend features never
+    import each other's internals; **backend TDD is mandatory** —
+    failing test first,
     red → green → refactor, no service/guard/state machine/job lands
     without tests written before it, and existing acceptance
     criteria/spec test plans are transcribed into tests before coding;
