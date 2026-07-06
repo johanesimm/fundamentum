@@ -1,9 +1,9 @@
----
-name: docs-architecture
-description: Generate the Solution Architecture documents (09-Solution-Architecture, 09.5 ADRs, 09.A-09.J boundary docs) from a completed Product Foundation. Use after docs-foundation in the documentation pipeline, or when the user asks for architecture docs/ADRs/module boundaries. Requires foundation docs to exist; interviews the user on every technology and boundary choice.
----
+# Phase 2 — Solution Architecture (docs/architecture/09.x)
 
-# Solution Architecture (docs/architecture/09.x)
+> Extension of `blueprint`. Read and follow this file when the
+> orchestrator reaches the architecture phase. Requires the foundation
+> docs (00–08) to exist; interviews the user on every technology and
+> boundary choice.
 
 Translate the foundation (00–08) into locked technical decisions.
 **Read the foundation docs first** — architecture serves the domain
@@ -58,4 +58,4 @@ beats length.
 
 09 + 09.5 + 09.A–J exist; module list (09.C) and data ownership
 (09.F) are mutually consistent; ADRs cover every stack row in 09.J;
-PROJECT_STATE points at the Master PRD (skill: `docs-prd`).
+PROJECT_STATE points at the Master PRD (`phases/prd.md`).

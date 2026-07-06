@@ -1,6 +1,6 @@
 ---
-name: docs-init-project
-description: Bootstrap the documented-initialization pipeline for a NEW project — creates the docs/ scaffold (README, PROJECT_STATE, ROADMAP, CHANGELOG) and drives the five documentation phases in order (foundation → architecture → prd → engineering → planning). Use when the user wants to start a project "documentation-first" or asks to "initialize project docs like Platform Team Monitoring". Entry point for the docs-* skill family.
+name: blueprint
+description: Bootstrap AND drive the documented-initialization pipeline for a NEW / greenfield project — creates the docs/ scaffold (README, PROJECT_STATE, ROADMAP, CHANGELOG) and runs all five documentation phases in order (foundation → architecture → prd → engineering → planning), each defined in its own bundled phase file under phases/. Use when the user wants to start a project "documentation-first", asks to "initialize project docs", or asks for any single phase (vision/glossary/domain, architecture/ADRs, Master/Feature PRDs, engineering specs/schema/API, or the dev plan). Self-contained entry point for the whole docs pipeline.
 ---
 
 # Documented Project Initialization (orchestrator)
@@ -13,9 +13,12 @@ foundation (00-08) → architecture (09.x) → PRDs (10-16)
 → engineering (20-25) → planning (dev phases)
 ```
 
-Each phase has its own skill; this skill sets up the scaffold and
-tells you which one to invoke next. **Never write code during this
-pipeline.** Never skip a phase: each consumes the previous one.
+Each phase is a bundled instruction file in `phases/`; this skill sets
+up the scaffold, then you **read the relevant `phases/*.md` file and
+follow it** for that phase. **Never write code during this pipeline.**
+Never skip a phase: each consumes the previous one. If the user asks
+for just one phase, jump straight to that phase file — but first
+confirm its prerequisite docs exist (each file states what it needs).
 
 ## Step 1 — Interview (always first)
 
@@ -45,16 +48,19 @@ Create empty dirs: `docs/foundation`, `docs/architecture`, `docs/prd`,
 
 ## Step 3 — Drive the phases
 
-Invoke (or instruct the user to invoke) in this order, one at a time,
-finishing each before the next:
+Work through these in order, one at a time, finishing each before the
+next. For each, **read the phase file and follow it to completion**:
 
-| Order | Skill | Produces |
+| Order | Phase file | Produces |
 |---|---|---|
-| 1 | `docs-foundation` | foundation/00–08 |
-| 2 | `docs-architecture` | architecture/09 + 09.5 ADRs + 09.A–J |
-| 3 | `docs-prd` | prd/10-Master-PRD + Feature PRDs 11+ |
-| 4 | `docs-engineering` | engineering/20–25 |
-| 5 | `docs-planning` | planning/ overview + phase files |
+| 1 | `phases/foundation.md` | foundation/00–08 |
+| 2 | `phases/architecture.md` | architecture/09 + 09.5 ADRs + 09.A–J |
+| 3 | `phases/prd.md` | prd/10-Master-PRD + Feature PRDs 11+ |
+| 4 | `phases/engineering.md` | engineering/20–25 |
+| 5 | `phases/planning.md` | planning/ overview + phase files |
+
+Each phase file ends with a "Done when" gate and a pointer to the next
+file — do not advance until the gate passes.
 
 ## House conventions (every phase skill enforces these; you enforce
 them too when reviewing output)

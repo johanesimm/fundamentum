@@ -1,14 +1,13 @@
----
-name: docs-planning
-description: Generate the development plan (docs/planning/ — overview + priority-ordered phase files with deliverable checklists and exit criteria) from completed PRDs and engineering specs, and wire the project's CLAUDE.md Implementation Guide to it. Use after docs-engineering as the final documentation-pipeline step, or when the user asks to plan/phase the implementation.
----
+# Phase 5 — Development Plan (docs/planning/)
 
-# Development Plan (docs/planning/)
+> Extension of `blueprint`. Read and follow this file when the
+> orchestrator reaches the planning phase — the final documentation
+> step. Requires PRDs and engineering specs.
 
-Requires PRDs and engineering specs. This plan turns the specs into a
-**priority-ordered, dependency-sequenced build order** with verifiable
-gates. It contains no new decisions — only sequencing (confirm the
-priority cut with the user if the product has any unusual emphasis).
+This plan turns the specs into a **priority-ordered, dependency-
+sequenced build order** with verifiable gates. It contains no new
+decisions — only sequencing (confirm the priority cut with the user if
+the product has any unusual emphasis).
 
 ## Files to produce
 
@@ -68,12 +67,13 @@ list with the rule that a phase starts only when the previous exit
 criteria pass; a "which spec answers what" map; the non-negotiables
 (server-side transactional guards, transactional event emission,
 immutable tables, AI isolation, no dev bypasses, the do-not-build
-list).
+list). Generate the CLAUDE.md itself with the `generate-claude-md`
+skill (it reuses everything above as interview input).
 
 ## Validation & bookkeeping
 
 Cross-check every requirement ID cited in planning files against the
-PRDs (same comm/grep as docs-engineering). Update PROJECT_STATE
+PRDs (same comm/grep as the engineering phase). Update PROJECT_STATE
 (current milestone = Dev Phase 1), CHANGELOG, README (add the planning
 section), ROADMAP (documentation ✅, implementation 🚧 Next).
 

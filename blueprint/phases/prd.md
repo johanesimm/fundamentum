@@ -1,9 +1,9 @@
----
-name: docs-prd
-description: Generate the Master PRD (10, chapter by chapter) and fully-decided Feature PRDs (11+) from completed foundation + architecture docs. Use after docs-architecture in the documentation pipeline, or when the user asks for a Master PRD / feature PRDs. Enforces the fully-decided rule (zero open questions in Feature PRDs) and grills the user on every product decision instead of parking it.
----
+# Phase 3 — PRDs (docs/prd/): Master PRD 10 + Feature PRDs 11+
 
-# PRDs (docs/prd/): Master PRD 10 + Feature PRDs 11+
+> Extension of `blueprint`. Read and follow this file when the
+> orchestrator reaches the PRD phase. Enforces the fully-decided rule
+> (zero open questions in Feature PRDs) and grills the user on every
+> product decision instead of parking it.
 
 Requires foundation (00–08) and architecture (09.x) to exist — read
 them first and mine them for **gaps, ambiguities, and inconsistencies**
@@ -94,4 +94,4 @@ order:
 Master PRD + all module PRDs exist, validation greps are clean
 everywhere, every foundation open question is either decided in a PRD
 or explicitly registered in Master PRD chapter 8, and PROJECT_STATE
-points at engineering (skill: `docs-engineering`).
+points at engineering (`phases/engineering.md`).

@@ -1,9 +1,9 @@
----
-name: docs-engineering
-description: Generate the Engineering Specifications (20-ERD, 21-Database-Schema with real-database validation, 22-REST-API, 23-Frontend-Specification, 24-Backend-Specification, 25-Deployment-Guide) from fully-decided PRDs. Use after docs-prd in the documentation pipeline, or when the user asks for engineering specs/schema/API contract. Derives mechanically from the PRDs; asks the user only for genuine engineering choices; validates executable artifacts.
----
+# Phase 4 — Engineering Specifications (docs/engineering/20–25)
 
-# Engineering Specifications (docs/engineering/20–25)
+> Extension of `blueprint`. Read and follow this file when the
+> orchestrator reaches the engineering phase. Derives mechanically from
+> the PRDs; asks the user only for genuine engineering choices;
+> validates executable artifacts.
 
 Requires fully-decided PRDs. These documents **derive** from the PRDs
 — if you hit an undecided product question, STOP and send it back
@@ -112,4 +112,4 @@ After each doc: cross-check grep, PROJECT_STATE, CHANGELOG (record
 engineering decisions like transport choices individually), ROADMAP/
 README markers. Done when 20–25 exist, the schema has passed live
 validation, all reference greps are clean, and PROJECT_STATE points at
-planning (skill: `docs-planning`).
+planning (`phases/planning.md`).

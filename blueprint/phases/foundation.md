@@ -1,9 +1,8 @@
----
-name: docs-foundation
-description: Generate the Product Foundation documents (00-Product-Vision through 08-MVP-Roadmap) for a new project via structured interviews. Use when starting the documentation pipeline (after docs-init-project) or when the user asks for vision/glossary/domain-model/user-journey/roadmap docs. Interview-driven — never invents product facts.
----
+# Phase 1 — Product Foundation (docs/foundation/00–08)
 
-# Product Foundation (docs/foundation/00–08)
+> Extension of `blueprint`. Read and follow this file when the
+> orchestrator reaches the foundation phase. Interview-driven — never
+> invents product facts.
 
 Produce nine documents in dependency order. Each is written only after
 its interview round; **every product fact comes from the user**.
@@ -76,4 +75,4 @@ Work strictly in order — later docs consume earlier ones:
 All nine exist, cross-reference cleanly (no term used that 02 doesn't
 define; no feature in 08 absent from 00's scope), open questions are
 consolidated in 03/04, and PROJECT_STATE points at the architecture
-phase (skill: `docs-architecture`).
+phase (`phases/architecture.md`).

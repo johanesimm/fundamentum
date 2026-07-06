@@ -1,8 +1,9 @@
 # Fundamentum — Documentation-First Project Initialization Skills
 
 > A Claude Code skill suite that builds a complete, fully-decided
-> documentation set for a new software project **before any code is
-> written** — then plans the implementation.
+> documentation set for a software project — **before any code is
+> written** for a greenfield build, or **retro-fitted onto an existing
+> codebase** — then plans the implementation.
 
 ------------------------------------------------------------------------
 
@@ -48,18 +49,39 @@ so any future session can implement the project without re-deriving anything.
 
 ## Skill inventory
 
+Three skills — two orchestrators (new vs existing project) plus the
+standalone CLAUDE.md generator:
+
 | Skill | Role | Invoke when |
 |---|---|---|
-| `docs-init-project` | **Entry point** — scaffold + house conventions + drives the pipeline | Starting a new documentation-first project |
-| `docs-foundation` | Foundation docs 00–08 | After init |
-| `docs-architecture` | Architecture 09.x + ADRs | After foundation |
-| `docs-prd` | Master PRD + fully-decided Feature PRDs | After architecture |
-| `docs-engineering` | Engineering specs 20–25 (with live validation) | After PRDs |
-| `docs-planning` | Priority-ordered dev phases + CLAUDE.md wiring | After engineering |
-| `generate-claude-md` | Standalone: generate a house-style CLAUDE.md for any project (interview-driven) | Anytime; also the pipeline's final step |
+| `blueprint` | **Greenfield orchestrator** — scaffolds `docs/` and drives all five phases (foundation → architecture → prd → engineering → planning), deciding everything by interview | Starting a brand-new project documentation-first, or asking for any single phase |
+| `excavate` | **Brownfield orchestrator** — surveys the real code + DB, then drives a reduced pipeline (foundation → prd → data/API → planning) that documents what's already built and plans the gap | Documenting / reverse-engineering an existing codebase |
+| `generate-claude-md` | Standalone: generate a house-style CLAUDE.md for any project (interview-driven) | Anytime; also each pipeline's final step |
 
-Each skill is self-contained; the pipeline order above is enforced by
-each skill's prerequisites, not by hidden state.
+The phases are **not** separate skills — each orchestrator bundles them
+as instruction files under its own `phases/`, read one at a time:
+
+```
+blueprint/  (greenfield)              excavate/  (existing codebase)
+├── SKILL.md   scaffold + drive       ├── SKILL.md   survey code, then drive
+└── phases/                           └── phases/
+    ├── foundation.md   00–08             ├── foundation.md   00–08  (derived + intent)
+    ├── architecture.md 09.x              ├── prd.md          10–16  (as-built PRDs)
+    ├── prd.md          10–16             ├── engineering.md  20–22  (introspected
+    ├── engineering.md  20–25             │                          ERD/schema/API)
+    └── planning.md     dev phases        └── planning.md     remaining-work plan
+```
+
+The existing-project pipeline deliberately **skips architecture (09.x)
+and the backend/frontend build-specs + deploy guide (23–25)** — for a
+codebase that already exists, the code is the authority for those. Its
+method flips too: **code is the source of truth**, and the user is
+interviewed only for product intent the code can't reveal (vision,
+non-goals, rationale, canonical names).
+
+In both, the pipeline order is enforced by each phase file's stated
+prerequisites and "Done when" gate, not by hidden state — so you can
+jump straight to one phase, provided its inputs already exist.
 
 ## Installation (in a new repository)
 
@@ -70,6 +92,7 @@ each skill's prerequisites, not by hidden state.
 Then, in Claude Code:
 
 ```
-"Initialize this project documentation-first"   → docs-init-project
-"Generate a CLAUDE.md for this project"         → generate-claude-md
+"Initialize this new project documentation-first"  → blueprint
+"Document this existing codebase"                   → excavate
+"Generate a CLAUDE.md for this project"             → generate-claude-md
 ```
