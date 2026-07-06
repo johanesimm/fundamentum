@@ -1,0 +1,29 @@
+{
+  "name": "fundamentum",
+  "version": "0.1.0",
+  "description": "Documentation-first Claude Code skill suite (blueprint / excavate / primer) with a one-command installer.",
+  "type": "module",
+  "bin": {
+    "fundamentum": "bin/cli.mjs"
+  },
+  "files": [
+    "bin/",
+    "blueprint/",
+    "excavate/",
+    "primer/",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "skills",
+    "agents",
+    "agents.md",
+    "documentation",
+    "prd"
+  ],
+  "license": "MIT"
+}

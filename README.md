@@ -91,11 +91,43 @@ In both, the pipeline order is enforced by each phase file's stated
 prerequisites and "Done when" gate, not by hidden state — so you can
 jump straight to one phase, provided its inputs already exist.
 
-## Installation (in a new repository)
+## Installation
 
-- **Per project**: copy the skill folders into `<repo>/.claude/skills/`.
-- **Everywhere**: copy them into `~/.claude/skills/` to have the suite
-  available in every project.
+### One command (recommended)
+
+Run the installer with `npx` — it asks whether to install **globally**
+(every project) or into the **current project**, then copies the skills
+into the right `.claude/skills/` directory:
+
+```
+npx fundamentum            # install all skills, prompts global vs project
+npx fundamentum add primer # install just one skill
+npx fundamentum --global   # skip the prompt: install for every project
+npx fundamentum --project  # skip the prompt: install into ./.claude/skills
+npx fundamentum list       # show bundled skills
+```
+
+Not yet on npm? Run it straight from the repo:
+
+```
+npx github:<owner>/fundamentum        # from GitHub
+node bin/cli.mjs --project            # from a local checkout
+```
+
+Restart Claude Code (or start a new session) after installing so it
+picks the skills up.
+
+### Manual (no Node)
+
+Copy the skill folders (`blueprint/`, `excavate/`, `primer/`) into
+`~/.claude/skills/` (global) or `<repo>/.claude/skills/` (project).
+
+### Publishing your own copy
+
+The package is a plain npm package: set a unique `name` in
+`package.json` (e.g. a scoped `@you/fundamentum`), then `npm publish`.
+Whatever you name it becomes the `npx <name>` command. `files` in
+`package.json` already ships only the CLI + skill folders + README.
 
 Then, in Claude Code:
 
